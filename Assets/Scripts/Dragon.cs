@@ -18,6 +18,8 @@ public class Dragon : MonoBehaviour {
 	private Quaternion targetRotation;
 	private Quaternion myRotation;
 
+	private Player player;
+
 	public float xSpeed = 10f;
 	public float ySpeed = 10f;
 
@@ -29,6 +31,8 @@ public class Dragon : MonoBehaviour {
 		startAngle = rb2d.transform.rotation;
 		myRotation = rb2d.transform.rotation;
 		myVelocity = new Vector3 ();
+
+		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player>();
 	}
 	
 	// Update is called once per frame
@@ -56,6 +60,11 @@ public class Dragon : MonoBehaviour {
 
 		rb2d.transform.rotation = myRotation;
 		rb2d.velocity = myVelocity;
+
+		if (myVelocity.x != 0 || myVelocity.y != 0) {
+			player.rigidbody.velocity = myVelocity;
+		}
+		//player.transform.position = new Vector3 (player.transform.position.x, player.transform.position.y + myVelocity.y * Time.fixedDeltaTime);
 	}
 
 	public void startMoving(float xDirection, float yDirection)

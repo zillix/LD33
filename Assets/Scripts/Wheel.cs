@@ -5,6 +5,8 @@ public class Wheel : MonoBehaviour, IMovement {
 
 	public GameObject triggerObject;
 	public GameObject wheelSprite;
+
+	BoxCollider2D collider;
 	
 	ITriggerable triggerable;
 
@@ -29,11 +31,24 @@ public class Wheel : MonoBehaviour, IMovement {
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
 		playerFeet = GameObject.FindGameObjectWithTag("PlayerFeet");
+		collider = gameObject.GetComponent<BoxCollider2D> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		if (Input.GetAxis ("Vertical") < 0) {
+			canCapture = false;
+			collider.enabled = false;
+			if (hasCapturedMovement) {
+				// Release the player, give him a new movement and give it the jump
+				IMovement movement = player.getDefaultMovement ();
+				releasePlayer (movement);
 	
+			}
+		} else {
+			collider.enabled = true;
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
@@ -81,20 +96,29 @@ public class Wheel : MonoBehaviour, IMovement {
 
 	public void onJump()
 	{
-		triggerable.stopTrigger (0);
-
 		// Release the player, give him a new movement and give it the jump
 		IMovement movement = player.getDefaultMovement ();
 		movement.onJump ();
 		player.onJump ();
+
+		releasePlayer (movement);
+	}
+
+	void releasePlayer(IMovement movement)
+	{
+		
+		
+		triggerable.stopTrigger (0);
+		
 		player.captureMovement (movement);
 		horizontalInput = 0;
 		hasCapturedMovement = false;
+		dragon.stopMoving ();
 	}
 
 	public void FixedUpdate()
 	{
-		//wheelSprite.transform.Rotate(new Vector3(0, 0, -horizontalInput * rotateSpeed * Time.fixedDeltaTime));
+		wheelSprite.transform.Rotate(new Vector3(0, 0, -horizontalInput * rotateSpeed * Time.fixedDeltaTime));
 
 		if (hasCapturedMovement) {
 			if (!horizontalInput.Equals (0)) {
@@ -105,7 +129,7 @@ public class Wheel : MonoBehaviour, IMovement {
 		}
 
 		if (hasCapturedMovement) {
-			player.transform.position = transform.position + captureOffset;
+			player.transform.position = transform.position - captureOffset;
 		}
 	
 	}
