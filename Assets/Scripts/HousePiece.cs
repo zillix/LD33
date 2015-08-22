@@ -18,14 +18,16 @@ public class HousePiece : MonoBehaviour {
 		
 	}
 	
-	void OnCollisionEnter2D( Collision2D collision) {
+	void OnTriggerEnter2D( Collider2D col) {
 
 		if (health > 0) {
-			if (collision.gameObject.tag == "Fireball") {
+			if (col.CompareTag("Fireball")) {
 				health--;
 
 				// Break apart!
 				if (health <= 0) {
+					
+					gameObject.GetComponentInParent<Rigidbody2D>().isKinematic = false;
 					gameObject.transform.parent = null;
 					gameObject.AddComponent<Rigidbody2D> ();
 				}

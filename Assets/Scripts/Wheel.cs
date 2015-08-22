@@ -37,7 +37,7 @@ public class Wheel : MonoBehaviour, IMovement {
 	// Update is called once per frame
 	void Update () {
 
-		if (Input.GetAxis ("Vertical") < 0) {
+		if (Input.GetAxis ("Vertical") < 0 || !player.groundedFrame) {
 			canCapture = false;
 			collider.enabled = false;
 			if (hasCapturedMovement) {
@@ -61,7 +61,8 @@ public class Wheel : MonoBehaviour, IMovement {
 	void OnTriggerStay2D(Collider2D col)
 	{
 		if (col.CompareTag ("PlayerFeet")) {
-			if (player.grounded && !hasCapturedMovement && canCapture && player.transform.position.y > transform.position.y)
+			if (player.grounded && 
+			   player.groundedFrame && !hasCapturedMovement && canCapture && player.transform.position.y > transform.position.y)
 			{
 				player.stopMoving();
 				player.captureMovement(this);
@@ -96,6 +97,8 @@ public class Wheel : MonoBehaviour, IMovement {
 
 	public void onJump()
 	{
+		player.groundedFrame = false;
+
 		// Release the player, give him a new movement and give it the jump
 		IMovement movement = player.getDefaultMovement ();
 		movement.onJump ();

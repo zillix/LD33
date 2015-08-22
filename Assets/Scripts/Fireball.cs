@@ -30,12 +30,21 @@ public class Fireball : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D col)
+	{
+		if (!col.gameObject.CompareTag ("DragonFrame") && !col.gameObject.CompareTag("Dragon") 
+		    && !col.gameObject.CompareTag("Fireball")) {
+			StartCoroutine (fadeOut (.1f));
+			//rb2d.velocity = new Vector2();
+		}
+	}
+
 	void OnCollisionEnter2D(Collision2D col)
 	{
 		if (!col.gameObject.CompareTag ("DragonFrame") && !col.gameObject.CompareTag("Dragon") 
 		    && !col.gameObject.CompareTag("Fireball")) {
-			StartCoroutine (fadeOut (.5f));
-			rb2d.velocity = new Vector2();
+			StartCoroutine (fadeOut (.1f));
+			//rb2d.velocity = new Vector2();
 		}
 	}
 

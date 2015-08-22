@@ -12,6 +12,7 @@ public class Player : MonoBehaviour {
 	private bool facingRight = true;
 
 	public bool grounded = true;
+	public bool groundedFrame = true;
 
 	private IMovement movement;
 

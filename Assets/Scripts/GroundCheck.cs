@@ -14,6 +14,10 @@ public class GroundCheck : MonoBehaviour {
 	{
 		if (!col.isTrigger) {
 			player.grounded = true;
+			if (col.CompareTag("DragonFrame"))
+			{
+				player.groundedFrame = true;
+			}
 		}
 	}
 
