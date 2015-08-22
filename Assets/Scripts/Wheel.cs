@@ -96,10 +96,12 @@ public class Wheel : MonoBehaviour, IMovement {
 	{
 		wheelSprite.transform.Rotate(new Vector3(0, 0, -horizontalInput * rotateSpeed * Time.fixedDeltaTime));
 
-		if (!horizontalInput.Equals (0)) {
-			dragon.startMoving (horizontalInput, 0);
-		} else {
-			dragon.stopMoving();
+		if (hasCapturedMovement) {
+			if (!horizontalInput.Equals (0)) {
+				dragon.startMoving (horizontalInput, 0);
+			} else {
+				dragon.stopMoving ();
+			}
 		}
 
 		if (hasCapturedMovement) {

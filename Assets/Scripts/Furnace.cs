@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Furnace : MonoBehaviour, ITriggerable{
 
-	int heat = 1;
+	public int heat = 1;
 	int lastPumpState = 0;
 	int accumulatedPumps = 0;
 

@@ -13,10 +13,13 @@ public class FlameEmitter : MonoBehaviour, ITriggerable {
 
 	private bool isEmitting = false;
 
+	public GameObject furnaceObject;
+	Furnace furnace;
+
 
 	// Use this for initialization
 	void Start () {
-	
+		furnace = furnaceObject.GetComponent<Furnace> ();
 	}
 	
 	// Update is called once per frame
@@ -42,6 +45,8 @@ public class FlameEmitter : MonoBehaviour, ITriggerable {
 		fireball.transform.rotation = transform.rotation * offset;
 		Vector2 fireballVelocity = transform.rotation * offset * new Vector2 (particleSpeed, 0);
 		fireball.GetComponent<Rigidbody2D> ().velocity = fireballVelocity;
+
+		fireball.GetComponent<Fireball> ().lifetime = .5f * furnace.heat;
 
 		//Debug.Log ("Spawning fireball at " + fireball.transform.position);
 

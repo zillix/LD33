@@ -33,7 +33,14 @@ public class Lever : MonoBehaviour {
 			state = Mathf.RoundToInt(Input.GetAxis("Vertical"));
 			tailTriggerable.startTrigger(state);
 			wingsTriggerable.startTrigger(state);
-			dragon.startMoving(0, state);
+			if (state == 0)
+			{
+				dragon.stopMoving();
+			}
+			else
+			{
+				dragon.startMoving(0, state);
+			}
 		}
 	}
 

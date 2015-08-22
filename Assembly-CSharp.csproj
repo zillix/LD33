@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\Button.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\DefaultMovement.cs" />
+     <Compile Include="Assets\Scripts\Destroyable.cs" />
      <Compile Include="Assets\Scripts\Dragon.cs" />
      <Compile Include="Assets\Scripts\DragonJaw.cs" />
      <Compile Include="Assets\Scripts\DragonTail.cs" />
@@ -58,6 +59,7 @@
      <Compile Include="Assets\Scripts\Furnace.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\GroundCheck.cs" />
+     <Compile Include="Assets\Scripts\HousePiece.cs" />
      <Compile Include="Assets\Scripts\IMovement.cs" />
      <Compile Include="Assets\Scripts\ITriggerable.cs" />
      <Compile Include="Assets\Scripts\Lever.cs" />

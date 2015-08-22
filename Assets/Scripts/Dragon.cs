@@ -43,7 +43,7 @@ public class Dragon : MonoBehaviour {
 
 	public void startMoving(float xDirection, float yDirection)
 	{
-		rb2d.velocity = new Vector2 (xDirection, yDirection);
+		rb2d.velocity = new Vector2 (xDirection * xSpeed, yDirection * ySpeed);
 	}
 
 	public void stopMoving()
