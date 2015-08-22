@@ -18,6 +18,8 @@ public class Player : MonoBehaviour {
 
 	private Dragon dragon;
 
+	private TextManager textManager;
+
 		
 	// Use this for initialization
 	void Start ()
@@ -26,6 +28,8 @@ public class Player : MonoBehaviour {
 		animator = gameObject.GetComponent<Animator> ();
 		movement = getDefaultMovement ();
 		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
+		textManager = GameObject.FindGameObjectWithTag ("TextManager").GetComponent<TextManager> ();
+		textManager.enqueue ("Test text", gameObject,  50);
 	}
 
 	public IMovement getDefaultMovement()

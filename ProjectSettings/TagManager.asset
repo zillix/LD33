@@ -8,6 +8,8 @@ TagManager:
   - PlayerFeet
   - Fireball
   - DragonFrame
+  - TextManager
+  - Canvas
   layers:
   - Default
   - TransparentFX

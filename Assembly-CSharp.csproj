@@ -61,10 +61,14 @@
      <Compile Include="Assets\Scripts\GroundCheck.cs" />
      <Compile Include="Assets\Scripts\HousePiece.cs" />
      <Compile Include="Assets\Scripts\IMovement.cs" />
+     <Compile Include="Assets\Scripts\ITextBox.cs" />
      <Compile Include="Assets\Scripts\ITriggerable.cs" />
      <Compile Include="Assets\Scripts\Lever.cs" />
+     <Compile Include="Assets\Scripts\PlayText.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Pump.cs" />
+     <Compile Include="Assets\Scripts\TextBox.cs" />
+     <Compile Include="Assets\Scripts\TextManager.cs" />
      <Compile Include="Assets\Scripts\Wheel.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
