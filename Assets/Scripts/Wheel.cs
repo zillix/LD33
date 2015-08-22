@@ -9,6 +9,7 @@ public class Wheel : MonoBehaviour, IMovement {
 	ITriggerable triggerable;
 
 	private Player player;
+	private GameObject playerFeet;
 
 	private float horizontalInput = 0f;
 
@@ -19,12 +20,15 @@ public class Wheel : MonoBehaviour, IMovement {
 
 	private Dragon dragon;
 
+	private Vector3 captureOffset;
+
 
 	// Use this for initialization
 	void Start () {
 		triggerable = (ITriggerable)triggerObject.GetComponent (typeof(ITriggerable));
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
+		playerFeet = GameObject.FindGameObjectWithTag("PlayerFeet");
 	}
 	
 	// Update is called once per frame
@@ -42,12 +46,13 @@ public class Wheel : MonoBehaviour, IMovement {
 	void OnTriggerStay2D(Collider2D col)
 	{
 		if (col.CompareTag ("PlayerFeet")) {
-			if (player.grounded && !hasCapturedMovement && canCapture)
+			if (player.grounded && !hasCapturedMovement && canCapture && player.transform.position.y > transform.position.y)
 			{
 				player.stopMoving();
 				player.captureMovement(this);
 				hasCapturedMovement = true;
 				canCapture = false;
+				captureOffset = transform.position - player.transform.position;
 			}
 		}
 	}
@@ -93,6 +98,12 @@ public class Wheel : MonoBehaviour, IMovement {
 
 		if (!horizontalInput.Equals (0)) {
 			dragon.startMoving (horizontalInput, 0);
+		} else {
+			dragon.stopMoving();
+		}
+
+		if (hasCapturedMovement) {
+			player.transform.position = transform.position + captureOffset;
 		}
 	
 	}

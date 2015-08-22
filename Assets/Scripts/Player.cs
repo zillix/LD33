@@ -82,4 +82,12 @@ public class Player : MonoBehaviour {
 	{
 		rb2d.velocity = new Vector3 (0, 0, 0);
 	}
+
+	public Rigidbody2D rigidbody
+	{
+		get
+		{
+			return rb2d;
+		}
+	}
 }
