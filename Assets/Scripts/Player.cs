@@ -13,51 +13,73 @@ public class Player : MonoBehaviour {
 
 	public bool grounded = true;
 
+	private IMovement movement;
+
+	private Dragon dragon;
+
 		
 	// Use this for initialization
 	void Start ()
 	{
 		rb2d = gameObject.GetComponent<Rigidbody2D> ();
 		animator = gameObject.GetComponent<Animator> ();
+		movement = getDefaultMovement ();
+		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
+	}
+
+	public IMovement getDefaultMovement()
+	{
+		return new DefaultMovement (maxSpeed, acceleration, jumpPower, rb2d);
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		float horizontalInput = Input.GetAxis ("Horizontal");
 		
-		if (Input.GetAxis ("Horizontal") < -0.1) 
+		if (horizontalInput < -0.1) 
 		{
 			transform.localScale = new Vector3(-1, 1, 1);
 			facingRight = false;
 		}
-		if (Input.GetAxis ("Horizontal") > 0.1) 
+		if (horizontalInput > 0.1) 
 		{
 			transform.localScale = new Vector3(1, 1, 1);
 			facingRight = true;
 		}
 
+		movement.onHorizontalInput (horizontalInput);
+
 		if (Input.GetButtonDown ("Jump") && grounded) {
-			grounded = false;
-			rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
-			rb2d.AddForce(Vector2.up * jumpPower);
+			movement.onJump();
+			onJump ();
 		}
 
-		animator.SetFloat ("Speed", Mathf.Abs (rb2d.velocity.x));
+		animator.SetFloat ("Speed", Mathf.Abs (movement.velocity.x));
 
+
+
+	}
+
+	public void onJump()
+	{
+		grounded = false;
 	}
 
 	void FixedUpdate()
 	{
-		float h = Input.GetAxis ("Horizontal");
+		transform.rotation = dragon.gameObject.transform.rotation;
 
-		rb2d.velocity = new Vector2 (h * maxSpeed, rb2d.velocity.y);
+		movement.FixedUpdate ();
+	}
 
-		if (rb2d.velocity.x > maxSpeed) {
-			rb2d.velocity = new Vector2(maxSpeed, rb2d.velocity.y);
-		}
-		
-		if (rb2d.velocity.x < -maxSpeed) {
-			rb2d.velocity = new Vector2(-maxSpeed, rb2d.velocity.y);
-		}
+	public void captureMovement(IMovement newMovement)
+	{
+		movement = newMovement;
+	}
+
+	public void stopMoving() 
+	{
+		rb2d.velocity = new Vector3 (0, 0, 0);
 	}
 }

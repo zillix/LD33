@@ -10,6 +10,12 @@ public class Dragon : MonoBehaviour {
 	private static float bobSpeed = 2f;
 	private static float bobMagnitude = 5f;
 
+	private static float moveRotation = -15f;
+	private static float lerpSpeed = .1f;
+
+	public float xSpeed = 10f;
+	public float ySpeed = 10f;
+
 	// Use this for initialization
 	void Start () {
 		rb2d = gameObject.GetComponent<Rigidbody2D> ();
@@ -26,6 +32,22 @@ public class Dragon : MonoBehaviour {
 	void FixedUpdate()
 	{
 		bobRotationAngle += bobSpeed * Time.deltaTime;
-		rb2d.transform.rotation = Quaternion.Euler(0, 0, bobMagnitude * Mathf.Sin (bobRotationAngle));
+
+		if (rb2d.velocity.x == 0) {
+			rb2d.transform.rotation = Quaternion.Lerp(rb2d.transform.rotation, Quaternion.Euler (0, 0, bobMagnitude * Mathf.Sin (bobRotationAngle)), lerpSpeed);
+		} else {
+			rb2d.transform.rotation = Quaternion.Lerp(rb2d.transform.rotation, Quaternion.Euler(0, 0, moveRotation * Mathf.Abs(rb2d.velocity.x) / rb2d.velocity.x), lerpSpeed);
+		
+		}
+	}
+
+	public void startMoving(float xDirection, float yDirection)
+	{
+		rb2d.velocity = new Vector2 (xDirection, yDirection);
+	}
+
+	public void stopMoving()
+	{
+		rb2d.velocity = new Vector2 ();
 	}
 }
