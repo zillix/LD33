@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Dragon
   - PlayerFeet
+  - Fireball
   layers:
   - Default
   - TransparentFX

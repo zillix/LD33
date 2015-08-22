@@ -3,19 +3,27 @@ using System.Collections;
 
 public class Button : MonoBehaviour {
 
-	public GameObject triggerObject;
+	public GameObject jawTriggerObject;
+	public GameObject emitterTriggerObject;
+	public GameObject furnaceObject;
 
-	ITriggerable triggerable;
+	Furnace furnace;
+
+	ITriggerable jawTriggerable;
+	ITriggerable emitterTriggerable;
 
 	void Start()
 	{
-		triggerable = (ITriggerable)triggerObject.GetComponent (typeof(ITriggerable));
+		jawTriggerable = (ITriggerable)jawTriggerObject.GetComponent (typeof(ITriggerable));
+		emitterTriggerable = (ITriggerable)emitterTriggerObject.GetComponent (typeof(ITriggerable));
+		furnace = furnaceObject.GetComponent<Furnace> ();
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
 		if (col.CompareTag("Player")) {
-			triggerable.startTrigger(1);
+			jawTriggerable.startTrigger(1);
+			emitterTriggerable.startTrigger(1);
 		}
 	}
 	
@@ -28,7 +36,8 @@ public class Button : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D col)
 	{
 		if (col.CompareTag("Player")) {
-			triggerable.stopTrigger(1);
+			jawTriggerable.stopTrigger(1);
+			emitterTriggerable.stopTrigger(1);
 		}
 	}
 }

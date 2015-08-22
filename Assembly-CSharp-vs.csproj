@@ -53,6 +53,8 @@
      <Compile Include="Assets\Scripts\DragonJaw.cs" />
      <Compile Include="Assets\Scripts\DragonTail.cs" />
      <Compile Include="Assets\Scripts\DragonWings.cs" />
+     <Compile Include="Assets\Scripts\Fireball.cs" />
+     <Compile Include="Assets\Scripts\FlameEmitter.cs" />
      <Compile Include="Assets\Scripts\Furnace.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\GroundCheck.cs" />
