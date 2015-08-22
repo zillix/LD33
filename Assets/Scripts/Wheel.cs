@@ -94,7 +94,7 @@ public class Wheel : MonoBehaviour, IMovement {
 
 	public void FixedUpdate()
 	{
-		wheelSprite.transform.Rotate(new Vector3(0, 0, -horizontalInput * rotateSpeed * Time.fixedDeltaTime));
+		//wheelSprite.transform.Rotate(new Vector3(0, 0, -horizontalInput * rotateSpeed * Time.fixedDeltaTime));
 
 		if (hasCapturedMovement) {
 			if (!horizontalInput.Equals (0)) {
