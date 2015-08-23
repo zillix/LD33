@@ -25,7 +25,7 @@ public class StartLever : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D col)
 	{
 		if (col.CompareTag ("Player")) {
-			int state = Mathf.RoundToInt(Input.GetAxis("Vertical"));
+			int state = Mathf.RoundToInt(Input.GetAxisRaw("Vertical"));
 			
 			if (state == 1)
 			{

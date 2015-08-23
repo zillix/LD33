@@ -11,6 +11,7 @@ public class Fireball : MonoBehaviour {
 	void Start () {
 		rb2d = gameObject.GetComponent<Rigidbody2D> ();
 		sprite = gameObject.GetComponent<SpriteRenderer> ();
+		sprite.sortingOrder = -5;
 	}
 	
 	// Update is called once per frame

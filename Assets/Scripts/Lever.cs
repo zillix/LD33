@@ -31,7 +31,7 @@ public class Lever : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D col)
 	{
 		if (col.CompareTag ("Player")) {
-			state = Mathf.RoundToInt(Input.GetAxis("Vertical"));
+			state = Mathf.RoundToInt(Input.GetAxisRaw("Vertical"));
 
 			tailTriggerable.startTrigger(state);
 				wingsTriggerable.startTrigger(state);
