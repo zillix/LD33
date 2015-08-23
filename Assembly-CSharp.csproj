@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Button.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
+     <Compile Include="Assets\Scripts\Cloud.cs" />
      <Compile Include="Assets\Scripts\DefaultMovement.cs" />
      <Compile Include="Assets\Scripts\Destroyable.cs" />
      <Compile Include="Assets\Scripts\Dragon.cs" />
