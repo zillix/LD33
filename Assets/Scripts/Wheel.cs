@@ -15,7 +15,7 @@ public class Wheel : MonoBehaviour, IMovement {
 
 	private float horizontalInput = 0f;
 
-	private static float rotateSpeed = 30f;
+	private static float rotateSpeed = 40f;
 
 	private bool hasCapturedMovement = false;
 	private bool canCapture = false;
@@ -23,6 +23,8 @@ public class Wheel : MonoBehaviour, IMovement {
 	private Dragon dragon;
 
 	private Vector3 captureOffset;
+
+	private GameController game;
 
 
 	// Use this for initialization
@@ -32,6 +34,7 @@ public class Wheel : MonoBehaviour, IMovement {
 		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
 		playerFeet = GameObject.FindGameObjectWithTag("PlayerFeet");
 		collider = gameObject.GetComponent<BoxCollider2D> ();
+		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 	}
 	
 	// Update is called once per frame
@@ -93,6 +96,10 @@ public class Wheel : MonoBehaviour, IMovement {
 			}
 		}
 		horizontalInput = value;
+
+		game.onWheelUsed ();
+
+
 	}
 
 	public void onJump()

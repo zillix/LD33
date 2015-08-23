@@ -10,6 +10,7 @@ public class Lever : MonoBehaviour {
 	public GameObject wingsTriggerObject;
 	private ITriggerable wingsTriggerable;
 	private Dragon dragon;
+	private GameController game;
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +19,7 @@ public class Lever : MonoBehaviour {
 		wingsTriggerable = (ITriggerable)wingsTriggerObject.GetComponent (typeof(ITriggerable));
 		anim = gameObject.GetComponent<Animator> ();
 		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
+		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 	}
 	
 	// Update is called once per frame
@@ -43,6 +45,11 @@ public class Lever : MonoBehaviour {
 				{
 					dragon.startMoving(0, state);
 				}
+
+			if (state != 0)
+			{
+				game.onLeverUsed();
+			}
 		}
 	}
 

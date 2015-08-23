@@ -7,6 +7,7 @@ public class Button : MonoBehaviour {
 	public GameObject emitterTriggerObject;
 	public GameObject furnaceObject;
 	private Dragon dragon;
+	private GameController game;
 
 	Furnace furnace;
 
@@ -26,6 +27,7 @@ public class Button : MonoBehaviour {
 		furnace = furnaceObject.GetComponent<Furnace> ();
 		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
 		anim = buttonObject.GetComponent<Animator> ();
+		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 	}
 
 	void Update()
@@ -45,6 +47,7 @@ public class Button : MonoBehaviour {
 
 			pressed = true;
 
+			game.onButtonUsed();
 		}
 	}
 	

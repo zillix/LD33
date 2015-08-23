@@ -30,6 +30,11 @@ public class GameController : MonoBehaviour {
 	private GameObject endPoint;
 	public GameObject blackScreen;
 
+	private bool notifiedPumpUsed = false;
+	private bool notifiedButtonUsed = false;
+	private bool notifiedWheelUsed = false;
+	private bool notifiedLeverUsed = false;
+
 	void Awake()
 	{
 		housesDestroyed = new Dictionary<int, bool> ();
@@ -58,8 +63,8 @@ public class GameController : MonoBehaviour {
 			GameObject.Find ("startText").SetActive(false);
 
 			
-			textManager.enqueue ("looks like this hasn't been used in a long time", player.gameObject);
-			textManager.enqueue ("will it even turn on?", player.gameObject);
+		//	textManager.enqueue ("looks like this hasn't been used in a long time", player.gameObject);
+			textManager.enqueue ("how do I turn this thing on?", player.gameObject);
 		}
 	}
 	
@@ -440,4 +445,41 @@ public class GameController : MonoBehaviour {
 		}
 		textManager.enqueue (message);
 	}
+
+	public void onPumpUsed()
+	{
+		if (!notifiedPumpUsed && !dragon.activated) {
+			notifiedPumpUsed = true;
+
+			textManager.enqueue("looks like it stokes the fire", player.gameObject, 2.0f);
+		}
+	}
+
+	public void onWheelUsed()
+	{
+		if (!notifiedWheelUsed && !dragon.activated) {
+			notifiedWheelUsed = true;
+			
+			textManager.enqueue("spins uselessly", player.gameObject, 2.0f);
+		}
+	}
+
+	public void onLeverUsed()
+	{
+		if (!notifiedLeverUsed && !dragon.activated) {
+			notifiedLeverUsed = true;
+			
+			textManager.enqueue("seems to be missing power", player.gameObject, 2.0f);
+		}
+	}
+
+	public void onButtonUsed()
+	{
+		if (!notifiedLeverUsed && !dragon.activated) {
+			notifiedLeverUsed = true;
+			
+			textManager.enqueue("no luck", player.gameObject, 2.0f);
+		}
+	}
+	
 }
