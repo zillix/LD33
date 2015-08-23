@@ -37,7 +37,7 @@ public class GameController : MonoBehaviour {
 
 	private SoundBank sounds;
 
-	private string version = "v1.01";
+	private string version = "v1.32";
 
 	void Awake()
 	{
@@ -107,32 +107,33 @@ public class GameController : MonoBehaviour {
 		List<PlayText> message = new List<PlayText> ();
 		if (houseDestroyedCount == 1) {
 			PlayText.addText (message, "whoa!", player.gameObject);
-			PlayText.addText (message, "hope that wasn't important...", player.gameObject);
+			PlayText.addText (message, "this thing has some power!", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText> ();
 		} else if (houseDestroyedCount == 2) {
-			PlayText.addText(message, "hm, that wasn't the right one", player.gameObject);
-			possibleMessages.Add (message);
-			PlayText.addText(message, "where is it?", player.gameObject);
+			PlayText.addText(message, "where's the target?", player.gameObject);
+			PlayText.addText(message, "it's gotta be around somewhere...", player.gameObject);
 			possibleMessages.Add (message);
 
 			message = new List<PlayText>();
 
 		} else if (houseDestroyedCount < 5) {
-			PlayText.addText(message, "they said it would be here...", player.gameObject);
+			PlayText.addText(message, "nope, wasn't that one either", player.gameObject);
+			PlayText.addText(message, "but I'll find it!", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
 
-			PlayText.addText(message, "this wasn't part of the job...", player.gameObject);
+			PlayText.addText(message, "another one down!", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
 
-			PlayText.addText(message, "the council didn't mention anything about inhabitants...", player.gameObject);
+			PlayText.addText(message, "boom!", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
 
 		} else if (houseDestroyedCount < 8) {
 			PlayText.addText(message, "they had it coming", player.gameObject);
+			PlayText.addText(message, "...so I assume", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();;
 			PlayText.addText(message, "I'll find the right one eventually...", player.gameObject);
@@ -172,8 +173,9 @@ public class GameController : MonoBehaviour {
 		bool force = true;
 
 		if (powerUpCount == 1) {
-			PlayText.addText (message, "ha! there we go!", player.gameObject);
-			PlayText.addText (message, "it works, just liked they said!", player.gameObject);
+			PlayText.addText (message, "ha! there we go!", player.gameObject, 2f);
+			PlayText.addText (message, "now, I've got a job to do", player.gameObject, 2f);
+			PlayText.addText (message, "let's find the target", player.gameObject, 2f);
 		} else if (powerUpCount == 2) {
 			PlayText.addText (message, "...and we're back!", player.gameObject);
 		} else if (powerUpCount == 3) {
@@ -215,13 +217,12 @@ public class GameController : MonoBehaviour {
 	{
 		List<PlayText> message = new List<PlayText> ();
 
-		if (emitTime > 5f && lastEmitMilestone < 5f) {
-			//PlayText.addText (message, "hm, not very impressive", player.gameObject);
-			//PlayText.addText (message, "looks like the furnace isn't very hot", player.gameObject);
-			lastEmitMilestone = 5f;
+		if (emitTime > 3f && lastEmitMilestone < 3f) {
+			PlayText.addText (message, "looks like the furnace isn't very hot", player.gameObject);
+			lastEmitMilestone = 3f;
 		}
 
-		//textManager.enqueue (message, true);
+		textManager.enqueue (message, true);
 	}
 
 	public void reportSighting(string reporterName, GameObject spotter)
@@ -372,8 +373,8 @@ public class GameController : MonoBehaviour {
 				}
 				else if (houseDestroyedCount < 5)
 				{
+					PlayText.addText (message, "the council won't be pleased");
 					PlayText.addText (message, "what kind of job was, this, anyway?");
-
 				}
 				else if (houseDestroyedCount < 10)
 				{
@@ -438,7 +439,7 @@ public class GameController : MonoBehaviour {
 		}
 		else if (houseDestroyedCount < 5)
 		{
-			PlayText.addText (message, "looks like I got it!");
+			PlayText.addText (message, "there! got it!");
 		}
 		else if (houseDestroyedCount < 10)
 		{
@@ -481,10 +482,10 @@ public class GameController : MonoBehaviour {
 
 	public void onButtonUsed()
 	{
-		if (!notifiedLeverUsed && !dragon.activated) {
-			notifiedLeverUsed = true;
+		if (!notifiedButtonUsed && !dragon.activated) {
+			notifiedButtonUsed = true;
 			
-			textManager.enqueue("no luck", player.gameObject, 2.0f);
+			textManager.enqueue("...nothing", player.gameObject, 2.0f);
 		}
 	}
 	

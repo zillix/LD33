@@ -61,8 +61,11 @@ public class FlameEmitter : MonoBehaviour, ITriggerable {
 				furnace.drainHeat ();
 				heatDrainTime = 0;
 			}
-			
-			game.onEmitTime (timeEmitting);
+
+			if (furnace.heat == 1)
+			{
+				game.onEmitTime (timeEmitting);
+			}
 
 		} else {
 		}
