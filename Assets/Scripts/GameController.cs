@@ -37,7 +37,7 @@ public class GameController : MonoBehaviour {
 
 	private SoundBank sounds;
 
-	private string version = "v1.32";
+	private string version = "v1.4";
 
 	void Awake()
 	{
