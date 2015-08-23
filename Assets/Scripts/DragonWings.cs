@@ -41,6 +41,6 @@ public class DragonWings : MonoBehaviour, ITriggerable {
 
 	public void stopTrigger(float value)
 	{
-		anim.speed = startSpeed;
+		currentSpeed = startSpeed;
 	}
 }

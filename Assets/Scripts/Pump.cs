@@ -36,7 +36,6 @@ public class Pump : MonoBehaviour {
 			{
 				isUp = state != -1;
 				triggerable.startTrigger(state);
-				Debug.Log ("Triggered: " + Random.Range (-1, 10));
 				anim.SetBool ("up", isUp);
 			}
 		}
