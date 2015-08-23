@@ -7,9 +7,12 @@ public class HousePiece : MonoBehaviour {
 
 	public int health = 2;
 
+	GameController game;
+
 	// Use this for initialization
 	void Start () {
 		collider2d = gameObject.GetComponent<BoxCollider2D> ();
+		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 		
 	}
 	
@@ -26,7 +29,9 @@ public class HousePiece : MonoBehaviour {
 
 				// Break apart!
 				if (health <= 0) {
+
 					
+					game.onHousePieceBroken(gameObject.transform.parent.GetInstanceID());
 					gameObject.GetComponentInParent<Rigidbody2D>().isKinematic = false;
 					gameObject.transform.parent = null;
 					gameObject.AddComponent<Rigidbody2D> ();

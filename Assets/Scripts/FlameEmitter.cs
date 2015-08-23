@@ -16,10 +16,16 @@ public class FlameEmitter : MonoBehaviour, ITriggerable {
 	public GameObject furnaceObject;
 	Furnace furnace;
 
+	private float timeEmitting = 0f;
+	private float heatDrainTime = 0f;
+
+	private GameController game;
+
 
 	// Use this for initialization
 	void Start () {
 		furnace = furnaceObject.GetComponent<Furnace> ();
+		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 	}
 	
 	// Update is called once per frame
@@ -31,6 +37,17 @@ public class FlameEmitter : MonoBehaviour, ITriggerable {
 				particleSpawnTimer = particleSpawnRate;
 				emit ();
 			}
+
+			
+			
+			heatDrainTime += Time.deltaTime;
+			timeEmitting += Time.deltaTime;
+			
+			if (heatDrainTime > 1.0f) {
+				furnace.drainHeat();
+			}
+			
+			game.onEmitTime (timeEmitting);
 		}
 	
 	}
@@ -46,7 +63,7 @@ public class FlameEmitter : MonoBehaviour, ITriggerable {
 		Vector2 fireballVelocity = transform.rotation * offset * new Vector2 (particleSpeed, 0);
 		fireball.GetComponent<Rigidbody2D> ().velocity = fireballVelocity;
 
-		fireball.GetComponent<Fireball> ().lifetime = .5f * furnace.heat;
+		fireball.GetComponent<Fireball> ().lifetime = .1f + .4f * (furnace.heat - 1);
 
 		//Debug.Log ("Spawning fireball at " + fireball.transform.position);
 

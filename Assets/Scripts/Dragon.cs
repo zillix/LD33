@@ -31,6 +31,8 @@ public class Dragon : MonoBehaviour {
 
 	public GameObject introMask;
 
+	private GameController game;
+
 	// Use this for initialization
 	void Awake () {
 		rb2d = gameObject.GetComponent<Rigidbody2D> ();
@@ -45,6 +47,8 @@ public class Dragon : MonoBehaviour {
 		player = playerObject.GetComponent<Player>();
 
 		introMask.SetActive (true);
+
+		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 	}
 	
 	// Update is called once per frame
@@ -54,17 +58,24 @@ public class Dragon : MonoBehaviour {
 
 	public void activate()
 	{
-		activated = true;
-		rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
-		introMask.SetActive (false);
-		rb2d.gravityScale = 0;
+		if (!activated) {
+			activated = true;
+			rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
+			introMask.SetActive (false);
+			rb2d.gravityScale = 0;
+			game.onDragonActivated ();
+		}
+
 	}
 
 	public void deactivate()
 	{
-		activated = false;
-		rb2d.gravityScale = 1;
-		rb2d.constraints = RigidbodyConstraints2D.None;
+		if (activated) {
+			activated = false;
+			rb2d.gravityScale = 1;
+			rb2d.constraints = RigidbodyConstraints2D.None;
+			game.onDragonDeactivated ();
+		}
 	}
 
 	void FixedUpdate()

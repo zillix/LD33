@@ -44,8 +44,17 @@ public class TextManager : MonoBehaviour {
 		}
 	}
 	
-	public void enqueue(List<PlayText> text)
+	public void enqueue(List<PlayText> text, bool force = false)
 	{
+		if (text.Count == 0) {
+			return;
+		}
+
+		if (force) {
+			textQueue.Clear ();
+			currentText = null;
+			currentDuration = 0;
+		}
 		textQueue.AddRange (text);
 	}
 
@@ -56,6 +65,8 @@ public class TextManager : MonoBehaviour {
 
 	private void advanceText()
 	{
+		currentDuration = 0;
+
 		if (currentText != null) {
 			if (currentText.callback != null)
 			{

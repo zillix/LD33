@@ -61,5 +61,12 @@ public class Furnace : MonoBehaviour, ITriggerable{
 
 	public void FixedUpdate()
 	{
+
+
+	}
+
+	public void drainHeat()
+	{
+		heat = Mathf.Max (1, heat - 1);
 	}
 }

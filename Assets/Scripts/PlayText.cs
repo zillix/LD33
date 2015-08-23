@@ -10,7 +10,7 @@ public class PlayText {
 	public Callback callback;
 	public GameObject speaker;
 
-	public static float DEFAULT_DURATION = 3.5f;
+	public static float DEFAULT_DURATION = 2.5f;
 
 	public PlayText(string Text = "", GameObject Speaker = null, float Duration = -1, Callback callbackFn = null)
 	{
