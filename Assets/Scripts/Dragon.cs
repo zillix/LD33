@@ -43,17 +43,27 @@ public class Dragon : MonoBehaviour {
 		myVelocity = new Vector3 ();
 
 		GameObject playerObject = (GameObject)Instantiate(playerPrefab);
-		playerObject.transform.position = spawnPoint.transform.position;
 		player = playerObject.GetComponent<Player>();
 
-		introMask.SetActive (true);
-
 		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+	
+		Debug.Log ("Start position" + transform.position);
+	}
+
+	void Start()
+	{
+		
+		player.gameObject.transform.position = spawnPoint.transform.position;
+		// This is dumb
+		introMask = game.introMask;
+		introMask.SetActive (true);
+		
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		Debug.Log ("Position: " + transform.position);
 	}
 
 	public void activate()
@@ -118,5 +128,13 @@ public class Dragon : MonoBehaviour {
 	public void stopMoving()
 	{
 		myVelocity = new Vector2 ();
+	}
+
+	public Rigidbody2D rigidbody
+	{
+		get
+		{
+			return rb2d;
+		}
 	}
 }

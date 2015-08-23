@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Furnace.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\GroundCheck.cs" />
+     <Compile Include="Assets\Scripts\House.cs" />
      <Compile Include="Assets\Scripts\HousePiece.cs" />
      <Compile Include="Assets\Scripts\IMovement.cs" />
      <Compile Include="Assets\Scripts\ITextBox.cs" />

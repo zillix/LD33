@@ -9,17 +9,28 @@ public class GameController : MonoBehaviour {
 	private TextManager textManager;
 
 	private Dictionary<int, bool> housesDestroyed;
+	private Dictionary<string, bool> reporters;
 
 	public int houseDestroyedCount = 0;
 
 	private int powerDownCount = 0;
 	private int powerUpCount = 0;
 
+	public GameObject dragonPrefab;
+
 	private float lastEmitMilestone = 0f;
+
+	public GameObject introMask;
 
 	void Awake()
 	{
 		housesDestroyed = new Dictionary<int, bool> ();
+		reporters = new Dictionary<string, bool> ();
+
+		GameObject dragonSpawn = GameObject.Find ("DragonSpawn");
+		GameObject newDrago = Instantiate (dragonPrefab) as GameObject;
+		newDrago.transform.position = dragonSpawn.transform.position;
+		Debug.Log ("New dragon spawned at " + newDrago.transform.position);
 	}
 
 	// Use this for initialization
@@ -38,7 +49,7 @@ public class GameController : MonoBehaviour {
 	{
 		bool value = false;
 		bool success = housesDestroyed.TryGetValue (parentID, out value);
-		if (success && value) {
+		if (!success && !value) {
 			incrementDestruction();
 		}
 
@@ -58,46 +69,50 @@ public class GameController : MonoBehaviour {
 			PlayText.addText(message, "whoa!", player.gameObject);
 			PlayText.addText(message, "hope that wasn't important...", player.gameObject);
 			possibleMessages.Add (message);
-			message.Clear();
+			message = new List<PlayText>();
 		} else if (houseDestroyedCount < 5) {
 			PlayText.addText(message, "why are there so many of them?", player.gameObject);
 			possibleMessages.Add (message);
-			message.Clear();
+			message = new List<PlayText>();
+
 			PlayText.addText(message, "I just need to find the right one...", player.gameObject);
 			possibleMessages.Add (message);
-			message.Clear();
+			message = new List<PlayText>();
+
 			PlayText.addText(message, "they've really built this place up", player.gameObject);
 			possibleMessages.Add (message);
-			message.Clear();
+			message = new List<PlayText>();
 
 		} else if (houseDestroyedCount < 8) {
 			PlayText.addText(message, "take that!", player.gameObject);
 			possibleMessages.Add (message);
-			message.Clear();
+			message = new List<PlayText>();;
 			PlayText.addText(message, "eat fire!", player.gameObject);
 			possibleMessages.Add (message);
-			message.Clear();
+			message = new List<PlayText>();
 			PlayText.addText(message, "watch it burn!", player.gameObject);
 			possibleMessages.Add (message);
-			message.Clear();
+			message = new List<PlayText>();
 			PlayText.addText(message, "feel the heat!", player.gameObject);
 			possibleMessages.Add (message);
-			message.Clear();
+			message = new List<PlayText>();
 
 		} else {
 			PlayText.addText(message, "BURN IT ALL!", player.gameObject);
 			possibleMessages.Add (message);
-			message.Clear();
+			message = new List<PlayText>();
 			PlayText.addText(message, "BURN, PEASANTS!", player.gameObject);
 			possibleMessages.Add (message);
-			message.Clear();
+			message = new List<PlayText>();
 			PlayText.addText(message, "BOW TO THE CLEANSING FLAME!", player.gameObject);
 			possibleMessages.Add (message);
-			message.Clear();
+			message = new List<PlayText>();
 
 		}
 
-		textManager.enqueue(possibleMessages[Random.Range (0, possibleMessages.Count)]);
+		int index = Random.Range (0, possibleMessages.Count);
+		List<PlayText> messagesToSend = possibleMessages [index];
+		textManager.enqueue(messagesToSend);
 	}
 
 	public void onDragonActivated()
@@ -159,5 +174,69 @@ public class GameController : MonoBehaviour {
 		}
 
 		textManager.enqueue (message, true);
+	}
+
+	public void reportSighting(string reporterName, GameObject spotter)
+	{
+		if (!reporters.ContainsKey (reporterName)) {
+			reporters.Add(reporterName, true);
+
+			List<PlayText> message = new List<PlayText> ();
+
+			switch (reporterName)
+			{
+			case "first":
+				PlayText.addText (message, "I.. I don't believe it!", spotter, 1.5f);
+				PlayText.addText (message, "why is it here?", spotter, 1.5f);
+				PlayText.addText (message, "sound the alarm!", spotter, 1.5f);
+				break;
+
+			case "side":
+
+				PlayText.addText (message, "it's reached the gate", spotter, 1.5f);
+
+				if (houseDestroyedCount == 0)
+				{
+					PlayText.addText (message, "maybe it'll turn back...?", spotter, 1.5f);
+				}
+				else if (houseDestroyedCount < 3)
+				{
+					PlayText.addText (message, "brace yourselves!", spotter, 1.5f);
+				}
+				else
+				{
+					PlayText.addText (message, "we're done for!", spotter, 1.5f);
+				}
+
+				break;
+
+
+			case "suspend":
+
+				if (houseDestroyedCount == 1)
+				{
+					PlayText.addText (message, "it's in the cave now", spotter, 1.5f);
+					PlayText.addText (message, "what does it want?", spotter, 1.5f);
+				}
+				else if (houseDestroyedCount < 4)
+				{
+					PlayText.addText (message, "it's broken through!", spotter, 1.5f);
+					PlayText.addText (message, "fall back! fallback!", spotter, 1.5f);
+				}
+				else
+				{
+					PlayText.addText (message, "why here? why now?", spotter, 1.5f);
+				}
+
+
+				break;
+
+
+
+			}
+
+			textManager.enqueue (message);
+		}
+
 	}
 }

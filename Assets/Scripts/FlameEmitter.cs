@@ -19,6 +19,8 @@ public class FlameEmitter : MonoBehaviour, ITriggerable {
 	private float timeEmitting = 0f;
 	private float heatDrainTime = 0f;
 
+	private float heatDrainInterval = 1.5f;
+
 	private GameController game;
 
 
@@ -43,8 +45,9 @@ public class FlameEmitter : MonoBehaviour, ITriggerable {
 			heatDrainTime += Time.deltaTime;
 			timeEmitting += Time.deltaTime;
 			
-			if (heatDrainTime > 1.0f) {
+			if (heatDrainTime > heatDrainInterval) {
 				furnace.drainHeat();
+				heatDrainTime = 0;
 			}
 			
 			game.onEmitTime (timeEmitting);

@@ -133,6 +133,7 @@ public class Wheel : MonoBehaviour, IMovement {
 
 		if (hasCapturedMovement) {
 			player.transform.position = transform.position - captureOffset;
+			player.rigidbody.velocity = dragon.rigidbody.velocity;
 		}
 	
 	}

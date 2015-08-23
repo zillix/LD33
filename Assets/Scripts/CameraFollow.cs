@@ -20,8 +20,8 @@ public class CameraFollow : MonoBehaviour {
 
 	void Start () {
 		target = GameObject.FindGameObjectWithTag ("Dragon");
-		offset = new Vector2 (transform.position.x - cameraOffset.transform.position.x, transform.position.y - cameraOffset.transform.position.y);
-		              
+		//offset = new Vector2 (transform.position.x - cameraOffset.transform.position.x, transform.position.y - cameraOffset.transform.position.y);
+		offset = new Vector2 ();            
 	}
 	
 	void FixedUpdate()

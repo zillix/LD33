@@ -35,6 +35,8 @@ public class HousePiece : MonoBehaviour {
 					gameObject.GetComponentInParent<Rigidbody2D>().isKinematic = false;
 					gameObject.transform.parent = null;
 					gameObject.AddComponent<Rigidbody2D> ();
+
+					//gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(1, 0, 0));
 				}
 				//collider2d.attachedRigidbody.SendMessage ("OnCollisionEnter2D", collision);
 			}
