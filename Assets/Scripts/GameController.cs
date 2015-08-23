@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour {
 	public GameObject introMask;
 
 	private bool wonderDestroyed = false;
+	private bool gameStarted = false;
 
 	private GameObject endPoint;
 	public GameObject blackScreen;
@@ -46,15 +47,30 @@ public class GameController : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		textManager = GameObject.FindGameObjectWithTag ("TextManager").GetComponent<TextManager> ();
 	
-		textManager.enqueue ("looks like this hasn't been used in a long time", player.gameObject);
-		textManager.enqueue ("will it even turn on?", player.gameObject);
 
+	}
+
+	void onKeyPressed()
+	{
+		if (!gameStarted) {
+			gameStarted = true;
+			GameObject.Find("zillixText").SetActive(false);
+			GameObject.Find ("startText").SetActive(false);
+
+			
+			textManager.enqueue ("looks like this hasn't been used in a long time", player.gameObject);
+			textManager.enqueue ("will it even turn on?", player.gameObject);
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (dragon.transform.position.x > endPoint.transform.position.x) {
 			endGame();
+		}
+
+		if (Input.anyKeyDown) {
+			onKeyPressed();
 		}
 	}
 
@@ -402,6 +418,8 @@ public class GameController : MonoBehaviour {
 
 	public void onWonderDestroyed()
 	{
+		wonderDestroyed = true;
+
 		List<PlayText> message = new List<PlayText> ();
 		if (houseDestroyedCount <= 1)
 		{

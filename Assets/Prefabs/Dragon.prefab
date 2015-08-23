@@ -742,8 +742,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126916}
-  m_LocalRotation: {x: 0, y: 0, z: -.0904375985, w: .995902121}
-  m_LocalPosition: {x: 1.65999997, y: -.959999979, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -.151439935, w: .988466442}
+  m_LocalPosition: {x: 1.03999996, y: -.980000019, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494218}
@@ -978,7 +978,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 149798}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.8628254, y: 11.4228601, z: 0}
+  m_LocalPosition: {x: 26.2099991, y: 9.11999989, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 426994}
@@ -1603,10 +1603,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireballPrefab: {fileID: 157012, guid: ec01185531d76784e9688edc18221646, type: 2}
-  coneAngle: 10
-  particleSpeed: 10
+  coneAngle: 20
+  particleSpeed: 12
   particleSpawnTimer: 0
-  particleSpawnRate: .100000001
+  particleSpawnRate: .0199999996
   furnaceObject: {fileID: 110766}
 --- !u!114 &11487718
 MonoBehaviour:
