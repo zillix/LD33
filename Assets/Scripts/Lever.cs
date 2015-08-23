@@ -13,6 +13,7 @@ public class Lever : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 		tailTriggerable = (ITriggerable)tailTriggerObject.GetComponent (typeof(ITriggerable));
 		wingsTriggerable = (ITriggerable)wingsTriggerObject.GetComponent (typeof(ITriggerable));
 		anim = gameObject.GetComponent<Animator> ();
@@ -31,16 +32,17 @@ public class Lever : MonoBehaviour {
 	{
 		if (col.CompareTag ("Player")) {
 			state = Mathf.RoundToInt(Input.GetAxis("Vertical"));
+
 			tailTriggerable.startTrigger(state);
-			wingsTriggerable.startTrigger(state);
-			if (state == 0)
-			{
-				dragon.stopMoving();
-			}
-			else
-			{
-				dragon.startMoving(0, state);
-			}
+				wingsTriggerable.startTrigger(state);
+				if (state == 0)
+				{
+					dragon.stopMoving();
+				}
+				else
+				{
+					dragon.startMoving(0, state);
+				}
 		}
 	}
 

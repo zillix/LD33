@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\PlayText.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Pump.cs" />
+     <Compile Include="Assets\Scripts\StartLever.cs" />
      <Compile Include="Assets\Scripts\TextBox.cs" />
      <Compile Include="Assets\Scripts\TextManager.cs" />
      <Compile Include="Assets\Scripts\Wheel.cs" />

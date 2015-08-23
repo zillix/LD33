@@ -6,6 +6,7 @@ public class Button : MonoBehaviour {
 	public GameObject jawTriggerObject;
 	public GameObject emitterTriggerObject;
 	public GameObject furnaceObject;
+	private Dragon dragon;
 
 	Furnace furnace;
 
@@ -17,13 +18,16 @@ public class Button : MonoBehaviour {
 		jawTriggerable = (ITriggerable)jawTriggerObject.GetComponent (typeof(ITriggerable));
 		emitterTriggerable = (ITriggerable)emitterTriggerObject.GetComponent (typeof(ITriggerable));
 		furnace = furnaceObject.GetComponent<Furnace> ();
+		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.CompareTag("Player")) {
-			jawTriggerable.startTrigger(1);
-			emitterTriggerable.startTrigger(1);
+		if (dragon.activated) {
+			if (col.CompareTag ("Player")) {
+				jawTriggerable.startTrigger (1);
+				emitterTriggerable.startTrigger (1);
+			}
 		}
 	}
 	
@@ -35,9 +39,12 @@ public class Button : MonoBehaviour {
 	
 	void OnTriggerExit2D(Collider2D col)
 	{
-		if (col.CompareTag("Player")) {
-			jawTriggerable.stopTrigger(1);
-			emitterTriggerable.stopTrigger(1);
+		if (dragon.activated) {
+
+			if (col.CompareTag ("Player")) {
+				jawTriggerable.stopTrigger (1);
+				emitterTriggerable.stopTrigger (1);
+			}
 		}
 	}
 }

@@ -29,7 +29,8 @@ public class Player : MonoBehaviour {
 		movement = getDefaultMovement ();
 		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
 		textManager = GameObject.FindGameObjectWithTag ("TextManager").GetComponent<TextManager> ();
-		textManager.enqueue ("Test text", gameObject,  50);
+		textManager.enqueue ("ok...", gameObject);
+		textManager.enqueue ("how do I work this thing?", gameObject);
 	}
 
 	public IMovement getDefaultMovement()

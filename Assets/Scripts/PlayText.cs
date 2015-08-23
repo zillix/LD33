@@ -15,7 +15,7 @@ public class PlayText {
 	public PlayText(string Text = "", GameObject Speaker = null, float Duration = -1, Callback callbackFn = null)
 	{
 		if (Duration < 0) {
-			duration = DEFAULT_DURATION;
+			Duration = DEFAULT_DURATION;
 		}
 		callback = callbackFn;
 		text = Text;

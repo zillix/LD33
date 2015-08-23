@@ -12,9 +12,14 @@ public class TextManager : MonoBehaviour {
 	private ITextBox textBox;
 	public GameObject textBoxObject;
 
+	void Awake()
+	{
+		textQueue = new List<PlayText> ();
+
+	}
+
 	// Use this for initialization
 	void Start () {
-		textQueue = new List<PlayText> ();
 		textBox = (ITextBox)textBoxObject.GetComponent (typeof(ITextBox));
 		textBoxObject.SetActive (true);
 		textBox.hide ();
@@ -31,10 +36,6 @@ public class TextManager : MonoBehaviour {
 					advanceText();
 				}
 
-			}
-			else if (textQueue.Count > 0)
-			{
-				advanceText();
 			}
 		}
 		else if (textQueue.Count > 0)

@@ -47,8 +47,6 @@ public class TextBox : MonoBehaviour, ITextBox{
 			Vector2 distVec = viewportTarget - myPosition;
 
 			float targetAngle = Vector2.Angle (new Vector2(1, 0), distVec);
-			Debug.Log (myPosition + " " + viewportTarget + " " + distVec);
-			Debug.Log(targetAngle);
 			pointer.transform.rotation = Quaternion.Lerp(pointer.transform.rotation, Quaternion.Euler(0, 0, targetAngle), .5f);
 			pointer.SetActive(true);
 

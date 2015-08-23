@@ -1,21 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\TextBox.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\StartLever.cs">
     <Files>
       <File FileName="Assets\Scripts\HousePiece.cs" Line="30" Column="73" />
-      <File FileName="Assets\Scripts\Fireball.cs" Line="37" Column="31" />
-      <File FileName="Assets\Scripts\Player.cs" Line="54" Column="50" />
+      <File FileName="Assets\Scripts\Fireball.cs" Line="18" Column="3" />
+      <File FileName="Assets\Scripts\Player.cs" Line="33" Column="64" />
       <File FileName="..\TutorialPlatformer\Assets\Scripts\Player.cs" Line="16" Column="33" />
-      <File FileName="Assets\Scripts\Lever.cs" Line="26" Column="2" />
-      <File FileName="Assets\Scripts\Dragon.cs" Line="38" Column="36" />
+      <File FileName="Assets\Scripts\Lever.cs" Line="21" Column="2" />
+      <File FileName="Assets\Scripts\Dragon.cs" Line="57" Column="20" />
       <File FileName="Assets\Scripts\Wheel.cs" Line="105" Column="20" />
       <File FileName="Assets\Scripts\FlameEmitter.cs" Line="43" Column="39" />
       <File FileName="Assets\Scripts\Furnace.cs" Line="24" Column="18" />
       <File FileName="Assets\Scripts\Destroyable.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\DragonJaw.cs" Line="39" Column="3" />
       <File FileName="Assets\Scripts\DragonTail.cs" Line="36" Column="4" />
-      <File FileName="Assets\Scripts\DragonWings.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Button.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\DragonWings.cs" Line="17" Column="27" />
+      <File FileName="Assets\Scripts\Button.cs" Line="18" Column="3" />
       <File FileName="Assets\Scripts\CameraFollow.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\DefaultMovement.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GameController.cs" Line="1" Column="1" />
@@ -23,10 +23,12 @@
       <File FileName="Assets\Scripts\IMovement.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\ITriggerable.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Pump.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\TextManager.cs" Line="62" Column="10" />
-      <File FileName="Assets\Scripts\PlayText.cs" Line="21" Column="21" />
-      <File FileName="Assets\Scripts\TextBox.cs" Line="25" Column="8" />
-      <File FileName="Assets\Scripts\ITextBox.cs" Line="6" Column="14" />
+      <File FileName="Assets\Scripts\TextManager.cs" Line="49" Column="23" />
+      <File FileName="Assets\Scripts\PlayText.cs" Line="21" Column="15" />
+      <File FileName="Assets\Scripts\TextBox.cs" Line="50" Column="4" />
+      <File FileName="Assets\Scripts\ITextBox.cs" Line="2" Column="19" />
+      <File FileName="..\TutorialPlatformer\Assets\Scripts\PauseMenu.cs" Line="45" Column="3" />
+      <File FileName="Assets\Scripts\StartLever.cs" Line="14" Column="12" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
