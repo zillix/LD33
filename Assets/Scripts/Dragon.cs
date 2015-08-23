@@ -46,8 +46,6 @@ public class Dragon : MonoBehaviour {
 		player = playerObject.GetComponent<Player>();
 
 		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
-	
-		Debug.Log ("Start position" + transform.position);
 	}
 
 	void Start()
@@ -63,7 +61,6 @@ public class Dragon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log ("Position: " + transform.position);
 	}
 
 	public void activate()

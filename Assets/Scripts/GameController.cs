@@ -20,7 +20,14 @@ public class GameController : MonoBehaviour {
 
 	private float lastEmitMilestone = 0f;
 
+	private bool startedEnding = false;
+
 	public GameObject introMask;
+
+	private bool wonderDestroyed = false;
+
+	private GameObject endPoint;
+	public GameObject blackScreen;
 
 	void Awake()
 	{
@@ -30,7 +37,7 @@ public class GameController : MonoBehaviour {
 		GameObject dragonSpawn = GameObject.Find ("DragonSpawn");
 		GameObject newDrago = Instantiate (dragonPrefab) as GameObject;
 		newDrago.transform.position = dragonSpawn.transform.position;
-		Debug.Log ("New dragon spawned at " + newDrago.transform.position);
+		endPoint = GameObject.Find ("EndGamePoint");
 	}
 
 	// Use this for initialization
@@ -38,11 +45,17 @@ public class GameController : MonoBehaviour {
 		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		textManager = GameObject.FindGameObjectWithTag ("TextManager").GetComponent<TextManager> ();
+	
+		textManager.enqueue ("looks like this hasn't been used in a long time", player.gameObject);
+		textManager.enqueue ("will it even turn on?", player.gameObject);
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (dragon.transform.position.x > endPoint.transform.position.x) {
+			endGame();
+		}
 	}
 
 	public void onHousePieceBroken(int parentID)
@@ -66,20 +79,28 @@ public class GameController : MonoBehaviour {
 
 		List<PlayText> message = new List<PlayText> ();
 		if (houseDestroyedCount == 1) {
-			PlayText.addText(message, "whoa!", player.gameObject);
-			PlayText.addText(message, "hope that wasn't important...", player.gameObject);
+			PlayText.addText (message, "whoa!", player.gameObject);
+			PlayText.addText (message, "hope that wasn't important...", player.gameObject);
 			possibleMessages.Add (message);
+			message = new List<PlayText> ();
+		} else if (houseDestroyedCount == 2) {
+			PlayText.addText(message, "hm, that wasn't the right one", player.gameObject);
+			possibleMessages.Add (message);
+			PlayText.addText(message, "where is it?", player.gameObject);
+			possibleMessages.Add (message);
+
 			message = new List<PlayText>();
+
 		} else if (houseDestroyedCount < 5) {
 			PlayText.addText(message, "why are there so many of them?", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
 
-			PlayText.addText(message, "I just need to find the right one...", player.gameObject);
+			PlayText.addText(message, "...where is it?", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
 
-			PlayText.addText(message, "they've really built this place up", player.gameObject);
+			PlayText.addText(message, "the council didn't mention anything about inhabitants...", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
 
@@ -125,7 +146,7 @@ public class GameController : MonoBehaviour {
 
 		if (powerUpCount == 1) {
 			PlayText.addText (message, "ha! there we go!", player.gameObject);
-			PlayText.addText (message, "and we're off!", player.gameObject);
+			PlayText.addText (message, "it works just liked they said!", player.gameObject);
 		} else if (powerUpCount == 2) {
 			PlayText.addText (message, "...and we're back!", player.gameObject);
 		} else if (powerUpCount == 3) {
@@ -213,7 +234,7 @@ public class GameController : MonoBehaviour {
 
 			case "suspend":
 
-				if (houseDestroyedCount == 1)
+				if (houseDestroyedCount <= 1)
 				{
 					PlayText.addText (message, "it's in the cave now", spotter, 1.5f);
 					PlayText.addText (message, "what does it want?", spotter, 1.5f);
@@ -221,7 +242,7 @@ public class GameController : MonoBehaviour {
 				else if (houseDestroyedCount < 4)
 				{
 					PlayText.addText (message, "it's broken through!", spotter, 1.5f);
-					PlayText.addText (message, "fall back! fallback!", spotter, 1.5f);
+					PlayText.addText (message, "fall back! fall back!", spotter, 1.5f);
 				}
 				else
 				{
@@ -231,6 +252,50 @@ public class GameController : MonoBehaviour {
 
 				break;
 
+			case "defend":
+
+				PlayText.addText (message, "defend the wonder!", spotter, 1.5f);
+				
+				if (houseDestroyedCount <= 1)
+				{
+					PlayText.addText (message, "maybe it's not hungry...", spotter, 1.5f);
+				}
+				else if (houseDestroyedCount < 6)
+				{
+					PlayText.addText (message, "this is our last chance!", spotter, 1.5f);
+				}
+				else
+				{
+					PlayText.addText (message, "this can't be!", spotter, 1.5f);
+					PlayText.addText (message, "we were so close!", spotter, 1.5f);
+				}
+				
+				
+				break;
+
+
+			case "plea":
+				
+				if (houseDestroyedCount <= 1)
+				{
+					PlayText.addText (message, "we're almost in the clear...", spotter, 1.5f);
+					PlayText.addText (message, "maybe it will ignore the wonder", spotter, 1.5f);
+				}
+				else if (houseDestroyedCount < 6)
+				{
+					PlayText.addText (message, "please! have mercy!", spotter, 1.5f);
+					PlayText.addText (message, "spare the wonder!", spotter, 1.5f);
+				}
+				else
+				{
+					PlayText.addText (message, "all hands to the wonder!", spotter, 1.5f);
+					PlayText.addText (message, "defend it at all costs!", spotter, 1.5f);
+				}
+				
+				
+				break;
+
+
 
 
 			}
@@ -238,5 +303,123 @@ public class GameController : MonoBehaviour {
 			textManager.enqueue (message);
 		}
 
+	}
+
+	public void endGame()
+	{
+		if (!startedEnding) {
+			startedEnding = true;
+			StartCoroutine(fadeOut(2));
+			List<PlayText> message = new List<PlayText> ();
+
+			if (wonderDestroyed)
+			{
+				PlayText.addText (message, "my duty has been fulfilled");
+
+				if (houseDestroyedCount <= 1)
+				{
+					PlayText.addText (message, "in and out. a clean job");
+				}
+				else if (houseDestroyedCount < 5)
+				{
+					PlayText.addText (message, "there were a few unfortunate casualties");
+				}
+				else if (houseDestroyedCount < 10)
+				{
+					PlayText.addText (message, "there will be no more resistance");
+				}
+				else
+				{
+					PlayText.addText (message, "the council will be pleased");
+				}
+				PlayText.addText (message, "another successful 'unseasonal dragon attack'");
+			}
+			else
+			{
+				PlayText.addText (message, "the wonder remains intact");
+
+				if (houseDestroyedCount <= 1)
+				{
+					PlayText.addText (message, "the council won't be pleased");
+					PlayText.addText (message, "...but I won't be their executioner");
+				}
+				else if (houseDestroyedCount < 5)
+				{
+					PlayText.addText (message, "what kind of job was, this, anyway?");
+
+				}
+				else if (houseDestroyedCount < 10)
+				{
+					PlayText.addText (message, "...I can't say the same for the village");
+				}
+				else
+				{
+					PlayText.addText (message, "it stands alone among the ruins");
+					PlayText.addText (message, "let the council do what they may");	
+					PlayText.addText (message, "I answer to no one");
+
+				}
+			}
+
+			PlayText.addText(message, "", null, .1f, queueRestartGame);
+
+			textManager.enqueue (message);
+		}
+	}
+
+	private void queueRestartGame()
+	{
+		StartCoroutine (restartGame());
+	}
+
+
+	private IEnumerator restartGame()
+	{
+		yield return new WaitForSeconds(3f);
+
+		Application.LoadLevel (Application.loadedLevel);
+	}
+
+	
+	public IEnumerator fadeOut(float fadeDur)
+	{
+		SpriteRenderer sprite = blackScreen.GetComponent<SpriteRenderer> ();
+		blackScreen.SetActive (true);
+
+		for (float timer = fadeDur; timer >= 0; timer-= Time.deltaTime) {
+			Color color = sprite.color;
+			color.a = 1f - timer / fadeDur;
+			sprite.color = color;
+			yield return null;
+		}
+		
+		Color color2= sprite.color;
+		color2.a = 1f;
+		sprite.color = color2;
+		
+		
+	}
+
+	public void onWonderDestroyed()
+	{
+		List<PlayText> message = new List<PlayText> ();
+		if (houseDestroyedCount <= 1)
+		{
+			PlayText.addText (message, "...it is done");
+		}
+		else if (houseDestroyedCount < 5)
+		{
+			PlayText.addText (message, "looks like I got it!");
+		}
+		else if (houseDestroyedCount < 10)
+		{
+			PlayText.addText (message, "why do they care so much about this thing, anyway?");
+		}
+		else
+		{
+			PlayText.addText (message, "a wonderful finish to a successful mission");
+			
+		}
+		textManager.enqueue (message);
 	}
 }

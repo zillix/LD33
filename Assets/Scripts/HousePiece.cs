@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class HousePiece : MonoBehaviour {
 	
@@ -9,11 +10,15 @@ public class HousePiece : MonoBehaviour {
 
 	GameController game;
 
+	int parentID;
+
 	// Use this for initialization
 	void Start () {
 		collider2d = gameObject.GetComponent<BoxCollider2D> ();
 		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
-		
+		parentID = gameObject.transform.parent.GetInstanceID();
+
+
 	}
 	
 	// Update is called once per frame
@@ -27,18 +32,17 @@ public class HousePiece : MonoBehaviour {
 			if (col.CompareTag("Fireball")) {
 				health--;
 
+				
 				// Break apart!
 				if (health <= 0) {
 
-					
-					game.onHousePieceBroken(gameObject.transform.parent.GetInstanceID());
-					gameObject.GetComponentInParent<Rigidbody2D>().isKinematic = false;
-					gameObject.transform.parent = null;
-					gameObject.AddComponent<Rigidbody2D> ();
+					if (gameObject.transform.parent != null)
+					{
+						gameObject.SendMessageUpwards ("pieceBroken", SendMessageOptions.DontRequireReceiver);
 
-					//gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(1, 0, 0));
+					}
+
 				}
-				//collider2d.attachedRigidbody.SendMessage ("OnCollisionEnter2D", collision);
 			}
 		}
 	}
