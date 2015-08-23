@@ -23,20 +23,32 @@ public class FlameEmitter : MonoBehaviour, ITriggerable {
 
 	private GameController game;
 
+	private SoundBank sounds;
+	private AudioSource fireSounds;
+
 
 	// Use this for initialization
+
+	void Awake()
+	{
+		fireSounds = gameObject.AddComponent<AudioSource> ();
+		fireSounds.loop = true;
+	}
+
 	void Start () {
 		furnace = furnaceObject.GetComponent<Furnace> ();
 		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		sounds = GameObject.FindGameObjectWithTag ("SoundBank").GetComponent<SoundBank> ();
+		fireSounds.clip = sounds.firebreathing;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 		if (isEmitting) {
-			particleSpawnTimer -= Time.deltaTime ;
+			particleSpawnTimer -= Time.deltaTime;
 			if (particleSpawnTimer <= 0) {
-				particleSpawnTimer = particleSpawnRate *  (1 - (furnace.heat - 1) / 6);
+				particleSpawnTimer = particleSpawnRate * (1 - (furnace.heat - 1) / 6);
 				emit ();
 			}
 
@@ -45,12 +57,14 @@ public class FlameEmitter : MonoBehaviour, ITriggerable {
 			heatDrainTime += Time.deltaTime;
 			timeEmitting += Time.deltaTime;
 			
-			if (heatDrainTime > heatDrainInterval)  {
-				furnace.drainHeat();
+			if (heatDrainTime > heatDrainInterval) {
+				furnace.drainHeat ();
 				heatDrainTime = 0;
 			}
 			
 			game.onEmitTime (timeEmitting);
+
+		} else {
 		}
 	
 	}
@@ -74,13 +88,19 @@ public class FlameEmitter : MonoBehaviour, ITriggerable {
 
 	public void startTrigger(float value)
 	{
-		isEmitting = true;
+		if (!isEmitting) {
+			isEmitting = true;
+			fireSounds.Play ();
+		}
 
 	}
 
 	public void stopTrigger(float value)
 	{
-		isEmitting = false;
+		if (isEmitting) {
+			isEmitting = false;
+			fireSounds.Stop ();
+		}
 	}
 
 	public void FixedUpdate()

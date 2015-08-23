@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 
 	private Dragon dragon;
@@ -35,6 +35,10 @@ public class GameController : MonoBehaviour {
 	private bool notifiedWheelUsed = false;
 	private bool notifiedLeverUsed = false;
 
+	private SoundBank sounds;
+
+	private string version = "v1.01";
+
 	void Awake()
 	{
 		housesDestroyed = new Dictionary<int, bool> ();
@@ -44,6 +48,8 @@ public class GameController : MonoBehaviour {
 		GameObject newDrago = Instantiate (dragonPrefab) as GameObject;
 		newDrago.transform.position = dragonSpawn.transform.position;
 		endPoint = GameObject.Find ("EndGamePoint");
+		sounds = GameObject.FindGameObjectWithTag ("SoundBank").GetComponent<SoundBank> ();
+		GameObject.Find("versionText").GetComponent<Text>().text = version;
 	}
 
 	// Use this for initialization
@@ -52,7 +58,6 @@ public class GameController : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("Player").GetComponent<Player> ();
 		textManager = GameObject.FindGameObjectWithTag ("TextManager").GetComponent<TextManager> ();
 	
-
 	}
 
 	void onKeyPressed()
@@ -61,6 +66,7 @@ public class GameController : MonoBehaviour {
 			gameStarted = true;
 			GameObject.Find("zillixText").SetActive(false);
 			GameObject.Find ("startText").SetActive(false);
+			GameObject.Find ("versionText").SetActive(false);
 
 			
 		//	textManager.enqueue ("looks like this hasn't been used in a long time", player.gameObject);
@@ -113,11 +119,11 @@ public class GameController : MonoBehaviour {
 			message = new List<PlayText>();
 
 		} else if (houseDestroyedCount < 5) {
-			PlayText.addText(message, "why are there so many of them?", player.gameObject);
+			PlayText.addText(message, "they said it would be here...", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
 
-			PlayText.addText(message, "...where is it?", player.gameObject);
+			PlayText.addText(message, "this wasn't part of the job...", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
 
@@ -126,13 +132,13 @@ public class GameController : MonoBehaviour {
 			message = new List<PlayText>();
 
 		} else if (houseDestroyedCount < 8) {
-			PlayText.addText(message, "take that!", player.gameObject);
+			PlayText.addText(message, "they had it coming", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();;
-			PlayText.addText(message, "eat fire!", player.gameObject);
+			PlayText.addText(message, "I'll find the right one eventually...", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
-			PlayText.addText(message, "watch it burn!", player.gameObject);
+			PlayText.addText(message, "get out of my way!", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
 			PlayText.addText(message, "feel the heat!", player.gameObject);
@@ -140,13 +146,13 @@ public class GameController : MonoBehaviour {
 			message = new List<PlayText>();
 
 		} else {
-			PlayText.addText(message, "BURN IT ALL!", player.gameObject);
+			PlayText.addText(message, "this is the best part of the job", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
-			PlayText.addText(message, "BURN, PEASANTS!", player.gameObject);
+			PlayText.addText(message, "this thing is amazing!", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
-			PlayText.addText(message, "BOW TO THE CLEANSING FLAME!", player.gameObject);
+			PlayText.addText(message, "I love this job", player.gameObject);
 			possibleMessages.Add (message);
 			message = new List<PlayText>();
 
@@ -167,14 +173,14 @@ public class GameController : MonoBehaviour {
 
 		if (powerUpCount == 1) {
 			PlayText.addText (message, "ha! there we go!", player.gameObject);
-			PlayText.addText (message, "it works just liked they said!", player.gameObject);
+			PlayText.addText (message, "it works, just liked they said!", player.gameObject);
 		} else if (powerUpCount == 2) {
 			PlayText.addText (message, "...and we're back!", player.gameObject);
 		} else if (powerUpCount == 3) {
 			
 			PlayText.addText (message, "back in the air!", player.gameObject);
 		} else if (powerUpCount == 4) {
-			PlayText.addText (message, "wheee?", player.gameObject);
+			PlayText.addText (message, "this seems like the most productive use of my time", player.gameObject);
 		} else if (powerUpCount == 5) {
 			// do nothing?
 		}
@@ -192,12 +198,12 @@ public class GameController : MonoBehaviour {
 		if (powerDownCount == 1) {
 			PlayText.addText (message, "whoops!", player.gameObject);
 		} else if (powerDownCount == 2) {
-			PlayText.addText (message, "power's out!", player.gameObject);
+			PlayText.addText (message, "argh, not again!", player.gameObject);
 		} else if (powerDownCount == 3) {
 			
 			PlayText.addText (message, "activate stealth mode!", player.gameObject);
 		} else if (powerDownCount == 4) {
-			PlayText.addText (message, "aaaahhhhhhhh!!!!!", player.gameObject);
+			PlayText.addText (message, "it's not like I have a deadline...", player.gameObject);
 		} else if (powerDownCount == 5) {
 			// do nothing?
 		}
@@ -210,12 +216,12 @@ public class GameController : MonoBehaviour {
 		List<PlayText> message = new List<PlayText> ();
 
 		if (emitTime > 5f && lastEmitMilestone < 5f) {
-			PlayText.addText (message, "hm, not very impressive", player.gameObject);
-			PlayText.addText (message, "looks like the furnace isn't very hot", player.gameObject);
+			//PlayText.addText (message, "hm, not very impressive", player.gameObject);
+			//PlayText.addText (message, "looks like the furnace isn't very hot", player.gameObject);
 			lastEmitMilestone = 5f;
 		}
 
-		textManager.enqueue (message, true);
+		//textManager.enqueue (message, true);
 	}
 
 	public void reportSighting(string reporterName, GameObject spotter)
@@ -228,8 +234,8 @@ public class GameController : MonoBehaviour {
 			switch (reporterName)
 			{
 			case "first":
-				PlayText.addText (message, "I.. I don't believe it!", spotter, 1.5f);
-				PlayText.addText (message, "why is it here?", spotter, 1.5f);
+				PlayText.addText (message, "I don't believe it!", spotter, 1.5f);
+				PlayText.addText (message, "we paid the tribute!", spotter, 1.5f);
 				PlayText.addText (message, "sound the alarm!", spotter, 1.5f);
 				break;
 
@@ -353,7 +359,7 @@ public class GameController : MonoBehaviour {
 				{
 					PlayText.addText (message, "the council will be pleased");
 				}
-				PlayText.addText (message, "another successful 'unseasonal dragon attack'");
+				PlayText.addText (message, "another successful 'unfortunate' dragon attack");
 			}
 			else
 			{

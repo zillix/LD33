@@ -11,10 +11,13 @@ public class House : MonoBehaviour {
 
 	private bool shattered = false;
 
+	private SoundBank sounds;
+
 	// Use this for initialization
 	void Start () {
 		myCamera = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<Camera> ();
 		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		sounds = GameObject.FindGameObjectWithTag ("SoundBank").GetComponent<SoundBank> ();
 	}
 	
 	// Update is called once per frame
@@ -37,6 +40,7 @@ public class House : MonoBehaviour {
 		if (!shattered) {
 			shattered = true;
 			gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
+			sounds.player.PlayOneShot(sounds.houseBurst);
 
 			foreach (Transform child in transform) {
 				child.parent = null;

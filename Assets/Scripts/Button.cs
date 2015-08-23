@@ -20,6 +20,8 @@ public class Button : MonoBehaviour {
 
 	public GameObject buttonObject;
 
+	private SoundBank sounds;
+
 	void Start()
 	{
 		jawTriggerable = (ITriggerable)jawTriggerObject.GetComponent (typeof(ITriggerable));
@@ -28,6 +30,7 @@ public class Button : MonoBehaviour {
 		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
 		anim = buttonObject.GetComponent<Animator> ();
 		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		sounds = GameObject.FindGameObjectWithTag ("SoundBank").GetComponent<SoundBank> ();
 	}
 
 	void Update()
@@ -45,9 +48,15 @@ public class Button : MonoBehaviour {
 				emitterTriggerable.startTrigger (1);
 			}
 
-			pressed = true;
+			if (!pressed)
+			{
+				pressed = true;
+				sounds.player.PlayOneShot(sounds.buttonPress);
+			}
 
 			game.onButtonUsed();
+
+
 		}
 	}
 	

@@ -10,6 +10,7 @@ TagManager:
   - DragonFrame
   - TextManager
   - Canvas
+  - SoundBank
   layers:
   - Default
   - TransparentFX

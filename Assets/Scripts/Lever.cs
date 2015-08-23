@@ -12,6 +12,14 @@ public class Lever : MonoBehaviour {
 	private Dragon dragon;
 	private GameController game;
 
+	private SoundBank sounds;
+	private AudioSource wingSounds;
+
+	void Awake()
+	{
+		wingSounds = gameObject.AddComponent<AudioSource> ();
+	}
+
 	// Use this for initialization
 	void Start () {
 
@@ -20,6 +28,10 @@ public class Lever : MonoBehaviour {
 		anim = gameObject.GetComponent<Animator> ();
 		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
 		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+
+		sounds = GameObject.FindGameObjectWithTag ("SoundBank").GetComponent<SoundBank> ();
+		wingSounds.clip = sounds.adjustTail;
+		wingSounds.loop = true;
 	}
 	
 	// Update is called once per frame
@@ -39,10 +51,15 @@ public class Lever : MonoBehaviour {
 				wingsTriggerable.startTrigger(state);
 				if (state == 0)
 				{
+					wingSounds.Stop ();
 					dragon.stopMoving();
 				}
 				else
 				{
+					if (dragon.activated && !wingSounds.isPlaying)
+					{
+						wingSounds.Play ();
+					}
 					dragon.startMoving(0, state);
 				}
 
@@ -60,6 +77,7 @@ public class Lever : MonoBehaviour {
 			tailTriggerable.stopTrigger(0);
 			wingsTriggerable.stopTrigger(0);
 			dragon.stopMoving();
+			wingSounds.Stop ();
 		}
 	}
 }

@@ -9,6 +9,7 @@ public class Pump : MonoBehaviour {
 	private ITriggerable triggerable;
 	private Dragon dragon;
 	private GameController game;
+	private SoundBank sounds;
 
 	private bool overlapping = false;
 	
@@ -18,6 +19,7 @@ public class Pump : MonoBehaviour {
 		anim = gameObject.GetComponent<Animator> ();
 		dragon = GameObject.FindGameObjectWithTag ("Dragon").GetComponent<Dragon> ();
 		game = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
+		sounds = GameObject.FindGameObjectWithTag ("SoundBank").GetComponent<SoundBank> ();
 	}
 	
 	// Update is called once per frame
@@ -39,6 +41,11 @@ public class Pump : MonoBehaviour {
 				isUp = state != -1;
 				triggerable.startTrigger(state);
 				anim.SetBool ("up", isUp);
+
+				if (!isUp)
+				{
+					sounds.player.PlayOneShot(sounds.pump);
+				}
 			}
 
 			if (state != 0)

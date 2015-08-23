@@ -26,7 +26,17 @@ public class Wheel : MonoBehaviour, IMovement {
 
 	private GameController game;
 
+	private SoundBank sounds;
+	private AudioSource wheelSounds;
 
+	void Awake()
+	{
+		wheelSounds = gameObject.AddComponent<AudioSource> ();
+		wheelSounds.loop = true;
+		sounds = GameObject.FindGameObjectWithTag ("SoundBank").GetComponent<SoundBank> ();
+		wheelSounds.clip = sounds.wheel;
+	}
+	
 	// Use this for initialization
 	void Start () {
 		triggerable = (ITriggerable)triggerObject.GetComponent (typeof(ITriggerable));
@@ -89,10 +99,15 @@ public class Wheel : MonoBehaviour, IMovement {
 			if (value == 0)
 			{
 				triggerable.stopTrigger(0);
+				wheelSounds.Stop();
 			}
 			else
 			{
 				triggerable.startTrigger(value);
+				if (!wheelSounds.isPlaying)
+				{
+					wheelSounds.Play ();
+				}
 			}
 		}
 		horizontalInput = value;
@@ -124,6 +139,8 @@ public class Wheel : MonoBehaviour, IMovement {
 		horizontalInput = 0;
 		hasCapturedMovement = false;
 		dragon.stopMoving ();
+		
+		wheelSounds.Stop ();
 	}
 
 	public void FixedUpdate()
