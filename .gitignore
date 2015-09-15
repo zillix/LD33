@@ -1,4 +1,6 @@
 Library/metadata/
 Temp/UnityLockfile
-Temp/
 Library/ShaderCache
+Temp/
+bin/
+Library/shadercompiler*
