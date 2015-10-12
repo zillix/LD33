@@ -80,7 +80,9 @@ public class Dragon : MonoBehaviour {
 		if (activated) {
 			activated = false;
 			rb2d.gravityScale = 1;
-			rb2d.constraints = RigidbodyConstraints2D.None;
+
+			// This is really cool, but causes bugs :(
+			//rb2d.constraints = RigidbodyConstraints2D.None;
 			game.onDragonDeactivated ();
 		}
 	}
@@ -112,7 +114,20 @@ public class Dragon : MonoBehaviour {
 				player.rigidbody.velocity = myVelocity;
 			}
 
+
+		
+		// If the player gets too far away, teleport them back
+		if (Vector3.Distance (transform.position, player.transform.position) > 10) {
+			respawnPlayer();
+		}
+
 		//player.transform.position = new Vector3 (player.transform.position.x, player.transform.position.y + myVelocity.y * Time.fixedDeltaTime);
+	}
+
+	private void respawnPlayer()
+	{
+		player.gameObject.transform.position = spawnPoint.transform.position;
+		game.onRespawn();
 	}
 
 	public void startMoving(float xDirection, float yDirection)

@@ -92,9 +92,11 @@ public class TextManager : MonoBehaviour {
 		textBox.hide();
 	}
 
-	public bool isBusy()
+	public bool isBusy
 	{
-		return currentText != null;
+		get {
+			return currentText != null;
+		}
 	}
 
 

@@ -2600,6 +2600,8 @@ MonoBehaviour:
   dragonPrefab: {fileID: 149798, guid: 4c503075052c5e542a0a768188df9891, type: 2}
   introMask: {fileID: 697399045}
   blackScreen: {fileID: 426067137}
+  kidMode: 1
+  french: 1
 --- !u!4 &794766118
 Transform:
   m_ObjectHideFlags: 0

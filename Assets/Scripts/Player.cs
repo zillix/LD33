@@ -61,8 +61,6 @@ public class Player : MonoBehaviour {
 
 		animator.SetFloat ("Speed", Mathf.Abs (movement.velocity.x));
 
-
-
 	}
 
 	public void onJump()
